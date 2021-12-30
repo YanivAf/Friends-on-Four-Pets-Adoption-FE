@@ -23,6 +23,7 @@ import FofContext from "./fofContext";
 
 const ProfileView: React.FC = (): JSX.Element => {
   const {
+    domain,
     userInfo,
     viewedUserInfo,
     badRequest,
@@ -45,7 +46,7 @@ const ProfileView: React.FC = (): JSX.Element => {
       }).then(async (willToggle: boolean) => {
         if (willToggle) {
           await axios.put(
-            `http://localhost:5000/user/${viewedUserInfo.user._id}/toggle-ban`,
+            `${domain}/user/${viewedUserInfo.user._id}/toggle-ban`,
             {},
             { withCredentials: true }
           );

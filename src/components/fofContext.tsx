@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { FofContextI } from "../interfaces/contextsI";
 
 const FofContext = createContext<FofContextI>({
+  domain: "http://localhost:5000",
   currentPath: "/",
   getPets: null,
   pets: [],

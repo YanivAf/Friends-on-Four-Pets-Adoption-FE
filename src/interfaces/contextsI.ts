@@ -5,6 +5,7 @@ import ViewedUserInfoI from "./viewedUserInfoI";
 import ContactInfoI from "./contactInfoI";
 
 export interface FofContextI {
+  domain: string;
   currentPath: string;
   getPets: any;
   pets: PetI[];

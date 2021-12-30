@@ -23,7 +23,7 @@ interface Props {
 }
 
 const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
-  const { userInfo, userInfoDispatch, openModal, confirmDelete } =
+  const { domain, userInfo, userInfoDispatch, openModal, confirmDelete } =
     useContext(FofContext);
 
   const [saved, setSaved] = useState<boolean>(
@@ -60,11 +60,11 @@ const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
       loved ? setLovesCount(lovesCount - 1) : setLovesCount(lovesCount + 1);
       const { data } = loved
         ? await axios.delete(
-            `http://localhost:5000/pet/${petToRender._id}/love`,
+            `${domain}/pet/${petToRender._id}/love`,
             { withCredentials: true }
           )
         : await axios.post(
-            `http://localhost:5000/pet/${petToRender._id}/love`,
+            `${domain}/pet/${petToRender._id}/love`,
             {},
             { withCredentials: true }
           );
@@ -81,11 +81,11 @@ const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
       setSaved(!saved);
       const { data } = saved
         ? await axios.delete(
-            `http://localhost:5000/pet/${petToRender._id}/save`,
+            `${domain}/pet/${petToRender._id}/save`,
             { withCredentials: true }
           )
         : await axios.post(
-            `http://localhost:5000/pet/${petToRender._id}/save`,
+            `${domain}/pet/${petToRender._id}/save`,
             {},
             { withCredentials: true }
           );
@@ -116,7 +116,7 @@ const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
         <CardMedia
           component="img"
           sx={{ objectPosition: "50% 25%", height: "30vw", minHeight: 140 }}
-          image={`http://localhost:5000/${petToRender.petPicture
+          image={`${domain}/${petToRender.petPicture
             .replace(/\\/g, "/")
             .replace("public/", "")}?timestamp=${Date.now()}`}
           alt={`${petToRender.petName}`}

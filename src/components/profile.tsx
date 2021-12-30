@@ -13,6 +13,9 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 
 import SaveIcon from "@mui/icons-material/Save";
 
@@ -68,7 +71,7 @@ const Profile: React.FC = (): JSX.Element => {
     currentPath.indexOf("profile-view") === -1
       ? setUserInputs(userInfo)
       : setUserInputs(viewedUserInfo.user);
-  }, [currentPath, userInfo, viewedUserInfo]);
+  }, [currentPath]);
 
   return (
     <>
@@ -145,6 +148,21 @@ const Profile: React.FC = (): JSX.Element => {
                   InputProps={{ readOnly }}
                   inputProps={{ minLength: 20, maxLength: 200 }}
                 />
+                <div>
+                <Select
+                  label="Area"
+                  value={userInfoInputs.area !== undefined ? userInfoInputs.area : 'Not Available'}
+                  name="area"
+                  onChange={handleChange}
+                  readOnly={readOnly}
+                >
+                  <MenuItem value={"North"}>North</MenuItem>
+                  <MenuItem value={"Center"}>Center</MenuItem>
+                  <MenuItem value={"South"}>South</MenuItem>
+                  <MenuItem value={"Not Available"}>Not Available</MenuItem>
+                </Select>
+                <InputLabel>Area</InputLabel>
+                </div>
                 <TextField
                   label="Phone"
                   error={

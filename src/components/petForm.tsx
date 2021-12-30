@@ -23,6 +23,7 @@ import SaveIcon from "@mui/icons-material/Save";
 
 const PetForm: React.FC = (): JSX.Element => {
   const {
+    domain,
     currentPath,
     userInfo,
     pets,
@@ -36,7 +37,7 @@ const PetForm: React.FC = (): JSX.Element => {
   const existingPet = modalPetIndex !== undefined ? pets[modalPetIndex] : null;
   const petPicRef: any = createRef();
   const [newPetPicUrl, setNewPetPicUrl] = useState<string>(
-    `http://localhost:5000/images/default.png`
+    `${domain}/images/default.png`
   );
   const [petInputs, setPetInputs] = useState<PetI>(
     existingPet
@@ -174,7 +175,7 @@ const PetForm: React.FC = (): JSX.Element => {
             image={
               newPetPicUrl.indexOf("default.png") === -1
                 ? newPetPicUrl
-                : `http://localhost:5000/${existingPet?.petPicture
+                : `${domain}/${existingPet?.petPicture
                     ?.replace(/\\/g, "/")
                     .replace("public/", "")}?timestamp=${Date.now()}`
             }
