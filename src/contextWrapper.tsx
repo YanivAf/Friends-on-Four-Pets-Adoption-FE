@@ -474,7 +474,6 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
   }, [getPets, petsLimit, usersLimit, whichPets, userInfo]);
 
   useEffect(() => {
-    console.log('hi')
     if (userInfo._id !== "") return;
     const token = cookies.get("currentUser");
     getCurrentUser(token);
