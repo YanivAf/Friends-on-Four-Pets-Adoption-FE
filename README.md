@@ -31,3 +31,14 @@ Admin:
 - View all registered users
 - View specific user with published, adopted, fostered & saved pets
 - Ban/un-ban users (not other admins)
+
+## Running Locally
+
+use
+```
+yarn start
+```
+or
+```
+npm start
+```
