@@ -53,7 +53,6 @@ export default function AdvancedSearch() {
     const updatedSearchInputs = [...searchInputs];
     updatedSearchInputs[searchPropertyIndex].searchedValue = searchedValue;
     setSearchInputs(updatedSearchInputs);
-    console.log(updatedSearchInputs);
   };
 
   const handleMinMaxHChange = (
@@ -63,7 +62,6 @@ export default function AdvancedSearch() {
     const updatedSearchInputs = [...searchInputs];
     updatedSearchInputs[2].minMax = newMinMax;
     setSearchInputs(updatedSearchInputs);
-    console.log(updatedSearchInputs);
   };
 
   const handleMinMaxWChange = (
@@ -73,7 +71,6 @@ export default function AdvancedSearch() {
     const updatedSearchInputs = [...searchInputs];
     updatedSearchInputs[3].minMax = newMinMax;
     setSearchInputs(updatedSearchInputs);
-    console.log(updatedSearchInputs);
   };
 
   return (

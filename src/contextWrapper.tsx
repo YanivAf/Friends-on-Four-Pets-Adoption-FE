@@ -211,7 +211,6 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
             : await axios.get(`http://localhost:5000/pet/user/${userId}`, {
                 withCredentials: true,
               });
-        console.log(data);
         setPets(data);
         setLoading(false);
       } catch (error) {
@@ -438,7 +437,6 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
         `http://localhost:5000/user/${userId}/contact`,
         { withCredentials: true }
       );
-      console.log(data);
       setUserContactInfo(data);
       setIsOpen(true);
     } catch (error) {
