@@ -23,7 +23,7 @@ interface Props {
 }
 
 const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
-  const { domain, userInfo, userInfoDispatch, openModal, confirmDelete } =
+  const { domain, headers, userInfo, userInfoDispatch, openModal, confirmDelete } =
     useContext(FofContext);
 
   const [saved, setSaved] = useState<boolean>(
@@ -61,12 +61,18 @@ const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
       const { data } = loved
         ? await axios.delete(
             `${domain}/pet/${petToRender._id}/love`,
-            { withCredentials: true }
-          )
+            {
+              withCredentials: true,
+              headers
+            }
+        )
         : await axios.post(
             `${domain}/pet/${petToRender._id}/love`,
             {},
-            { withCredentials: true }
+            {
+              withCredentials: true,
+              headers
+            }
           );
       const { loves, lovedPets } = data;
       setLovesCount(loves);
@@ -82,12 +88,18 @@ const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
       const { data } = saved
         ? await axios.delete(
             `${domain}/pet/${petToRender._id}/save`,
-            { withCredentials: true }
+            {
+              withCredentials: true,
+              headers
+            }
           )
         : await axios.post(
             `${domain}/pet/${petToRender._id}/save`,
             {},
-            { withCredentials: true }
+            {
+              withCredentials: true,
+              headers
+            }
           );
       const { savedPets } = data;
       userInfoDispatch({ ...userInfo, savedPets });

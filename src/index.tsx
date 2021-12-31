@@ -7,11 +7,15 @@ import FriendsOnFour from "./FriendsOnFour";
 
 import axios from "axios";
 import swal from "sweetalert";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
     const { data, status } = error.response;
+    if (status === 401) cookies.remove('currentUser');
     const redirectStatuses = [401, 403];
     console.dir(data.message);
     swal({

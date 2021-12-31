@@ -24,6 +24,7 @@ import FofContext from "./fofContext";
 const ProfileView: React.FC = (): JSX.Element => {
   const {
     domain,
+    headers,
     userInfo,
     viewedUserInfo,
     badRequest,
@@ -48,7 +49,10 @@ const ProfileView: React.FC = (): JSX.Element => {
           await axios.put(
             `${domain}/user/${viewedUserInfo.user._id}/toggle-ban`,
             {},
-            { withCredentials: true }
+            {
+              withCredentials: true,
+              headers
+            }
           );
           setBanned(!banned);
         } else swal(`Ban cancelled`);

@@ -4,6 +4,7 @@ import { FofContextI } from "../interfaces/contextsI";
 const FofContext = createContext<FofContextI>({
   domain: "http://localhost:5000",
   currentPath: "/",
+  headers: { currentUser: "" },
   getPets: null,
   pets: [],
   setPets: null,

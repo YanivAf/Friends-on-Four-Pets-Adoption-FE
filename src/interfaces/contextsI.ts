@@ -7,6 +7,7 @@ import ContactInfoI from "./contactInfoI";
 export interface FofContextI {
   domain: string;
   currentPath: string;
+  headers: { currentUser: string };
   getPets: any;
   pets: PetI[];
   setPets: any;

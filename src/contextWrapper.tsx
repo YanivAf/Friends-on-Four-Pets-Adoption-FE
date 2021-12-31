@@ -22,11 +22,14 @@ const userInfoReducer = (userInfo: FullUserInfoI, updates: any) => {
   }
 };
 
-const cookies = new Cookies();
-
 const ContextWrapper: React.FC = ({ children }): JSX.Element => {
   const currentPath = window.location.pathname;
   const domain = DOMAIN || 'http://localhost:5000';
+  const cookies = new Cookies();
+  const token = cookies.get("currentUser");
+  const headers = {
+    currentUser: `Bearer ${token}`,
+  };
   const [pets, setPets] = useState<PetI[]>([]);
   const [petsLimit, setPetsLimit] = useState<number>(20);
   const [users, setUsers] = useState<FullUserInfoI[]>([]);
@@ -75,9 +78,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
   );
 
   const logout = async () => {
-    await axios.get(`${domain}/user/logout`, {
+    await axios.get(`${domain}/user/logout`,
+    {
       withCredentials: true,
+      headers
     });
+    cookies.remove('currentUser');
     userInfoDispatch({ _id: "", email: "", fullName: "", phone: "" });
     setViewedUserInfo({
       user: { _id: "", email: "", fullName: "", phone: "" },
@@ -109,12 +115,13 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
         { email, password },
         { withCredentials: true }
       );
-      const token = cookies.get("currentUser");
-      if (token) userInfoDispatch(data);
+      const { userDoc, token } = data;
+      cookies.set("currentUser", token, { maxAge: 7200 });
+      if (token) userInfoDispatch(userDoc);
       setAuthProcessing(false);
       getPets(searchInputs, searchedTypeString);
       swal({
-        title: `Welcome Back, ${data.fullName}!`,
+        title: `Welcome Back, ${userDoc.fullName}!`,
         icon: "success",
         buttons: [false, "Thanks"],
       });
@@ -130,8 +137,9 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       if (token) {
         const { data } = await axios.get(`${domain}/user/token/`, {
           withCredentials: true,
+          headers
         });
-        userInfoDispatch(data);
+        userInfoDispatch(data.userDoc);
       }
       setAuthProcessing(false);
     } catch (error) {
@@ -155,10 +163,11 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
         { email, password, passwordConfirm, fullName, phone },
         { withCredentials: true }
       );
-      const token = cookies.get("currentUser");
+      const { _id, token } = data
+      cookies.set("currentUser", token, { maxAge: 7200 });
       if (token)
         userInfoDispatch({
-          _id: data,
+          _id,
           email,
           fullName,
           phone,
@@ -207,11 +216,16 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
                   ],
                   limit: petsLimit,
                 },
-                { withCredentials: true }
+                {
+                  withCredentials: true,
+                }
               )
-            : await axios.get(`${domain}/pet/user/${userId}`, {
-                withCredentials: true,
-              });
+            : await axios.get(`${domain}/pet/user/${userId}`,
+                {
+                  withCredentials: true,
+                  headers
+                }
+              );
         setPets(data);
         setLoading(false);
       } catch (error) {
@@ -238,11 +252,17 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
         ? await axios.post(
             `${domain}/user/filtered`,
             { searchedUserString, limit: usersLimit },
-            { withCredentials: true }
+            {
+              withCredentials: true,
+              headers
+            }
           )
-        : await axios.get(`${domain}/user/${viewedUserId}/full`, {
-            withCredentials: true,
-          });
+        : await axios.get(`${domain}/user/${viewedUserId}/full`,
+            {
+              withCredentials: true,
+              headers
+            }
+          );
       viewedUserId ? setViewedUserInfo(data) : setUsers(data);
       setLoading(false);
     } catch (error) {
@@ -260,9 +280,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       const { data } = await axios.post(
         `${domain}/pet/`,
         newPetToPost,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers
+        }
       );
-      setPets([{ ...data, ...petInputs }, ...pets]);
+  setPets([{ ...data, ...petInputs }, ...pets]);
 
       closeModal();
     } catch (error) {
@@ -278,9 +301,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       const { data } = await axios.put(
         `${domain}/user/${userInfo._id}`,
         userInfoInputs,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers
+        }
       );
-      userInfoDispatch(data);
+  userInfoDispatch(data);
     } catch (error) {
       console.error("Error updating profile: ", error);
     }
@@ -310,9 +336,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       const { data } = await axios.put(
         `${domain}/pet/${updatedPet._id}`,
         updatedPetFd,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers
+        }
       );
-      const updatedPets = [...pets];
+  const updatedPets = [...pets];
       updatedPets.splice(modalPetIndex, 1, data);
       setPets(updatedPets);
 
@@ -328,9 +357,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       const { data } = await axios.post(
         `${domain}/pet/${existingPet._id}/request`,
         petRequest,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers
+        }
       );
-      userInfoDispatch(data);
+  userInfoDispatch(data);
       swal({
         title: `${type} Request for ${existingPet.petName} Sent`,
         text: 'You can track it via the "Saved" section.\nIf approved - you will be alerted!',
@@ -354,9 +386,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
     await axios.post(
       `${domain}/pet/${request.pet}/respond`,
       { response, requestId: request._id },
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers
+      }
     );
-  };
+};
 
   const handleReturn = async () => {
     try {
@@ -365,9 +400,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       const { data } = await axios.post(
         `${domain}/pet/${existingPet._id}/return`,
         {},
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers
+        }
       );
-      userInfoDispatch(data);
+  userInfoDispatch(data);
       swal({
         title: `${existingPet.petName}'s Return Done`,
         icon: "success",
@@ -386,9 +424,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       dangerMode: true,
     }).then(async (willDelete: boolean) => {
       if (willDelete) {
-        await axios.delete(`${domain}/pet/${petId}`, {
-          withCredentials: true,
-        });
+        await axios.delete(`${domain}/pet/${petId}`,
+          {
+            withCredentials: true,
+            headers
+          }
+        );
         const petIndex = pets.findIndex((pet) => pet._id === petId);
         const updatedPets = [...pets];
         updatedPets.splice(petIndex, 1);
@@ -436,9 +477,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       const userId = ownerId ? ownerId : pet.publisher;
       const { data } = await axios.get(
         `${domain}/user/${userId}/contact`,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers
+        }
       );
-      setUserContactInfo(data);
+  setUserContactInfo(data);
       setIsOpen(true);
     } catch (error) {
       console.error("Error getting contact info: ", error);
@@ -475,7 +519,6 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
 
   useEffect(() => {
     if (userInfo._id !== "") return;
-    const token = cookies.get("currentUser");
     getCurrentUser(token);
   }, []);
 
@@ -484,6 +527,7 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       value={{
         domain,
         currentPath,
+        headers,
         getPets,
         pets,
         setPets,
