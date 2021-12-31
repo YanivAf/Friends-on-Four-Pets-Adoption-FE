@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI= react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -53,5 +53,8 @@
   "devDependencies": {
     "@types/react-modal": "^3.13.1",
     "sass": "^1.45.0"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
