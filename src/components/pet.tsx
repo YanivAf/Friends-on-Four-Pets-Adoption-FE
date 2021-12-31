@@ -155,7 +155,7 @@ const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
           size="large"
           aria-label="pet info"
           disabled={
-            notAvailable && !isAdopter && !isFoster && userInfo.admin !== true
+            notAvailable && !isAdopter && !isFoster  && !isPublisher && userInfo.admin !== true 
           }
           color="info"
           {...(userInfo._id
