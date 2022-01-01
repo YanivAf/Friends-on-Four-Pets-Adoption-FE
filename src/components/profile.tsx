@@ -34,14 +34,10 @@ const Profile: React.FC = (): JSX.Element => {
       e.preventDefault();
       await updateProfile(userInfoInputs);
       setUserInputs(userInfoInputs);
-      swal({
-        title: `You got it, ${userInfoInputs.fullName}!`,
-        icon: "success",
-      });
     } catch (error) {
       console.error("Error updating profile: ", error);
     }
-  };
+  }
 
   const fullNameRegEx: RegExp =
     /^[a-zA-Z]{2,20}[.]?[ ][a-zA-Z]{2,20}([.]?[ ][a-zA-Z]{2,20})?$/;

@@ -13,8 +13,8 @@ export default interface PetI {
   hypoallergenic?: string;
   dietaryRestrictions?: string;
   publisher?: string;
-  adopter?: string;
-  foster?: string;
+  adopter?: string | null;
+  foster?: string | null;
   createdAt?: Date;
   updatedAt?: Date;
 }

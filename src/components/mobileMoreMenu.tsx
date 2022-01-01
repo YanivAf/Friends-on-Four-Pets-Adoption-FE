@@ -29,7 +29,7 @@ const MobileMoreMenu: React.FC<Props> = ({
   setMobileMoreAnchorEl,
   handleLogOut,
 }: Props): JSX.Element => {
-  const { currentPath, userInfo, userInfoDispatch, setWhichPets } =
+  const { currentPath, userInfo, setPets, userInfoDispatch, setWhichPets } =
     useContext(FofContext);
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -43,6 +43,7 @@ const MobileMoreMenu: React.FC<Props> = ({
     cookies.set("whichPets", "Owned", { path: "/", maxAge: 10 });
     cookies.set("userId", userInfo._id, { path: "/", maxAge: 10 });
     setWhichPets("Owned");
+    setPets([]);
     userInfoDispatch({ ...userInfo, recentlyApproved: 0 });
   };
 

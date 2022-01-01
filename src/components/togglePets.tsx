@@ -9,7 +9,7 @@ const TogglePets: React.FC = (): JSX.Element => {
   const { userInfo, viewedUserInfo, whichPets, setWhichPets, setPets } =
     useContext(FofContext);
 
-  const TogglePets = (
+  const togglePets = (
     event: React.MouseEvent<HTMLElement>,
     whichPets: string
   ) => {
@@ -24,7 +24,7 @@ const TogglePets: React.FC = (): JSX.Element => {
       sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
       value={whichPets}
       exclusive
-      onChange={TogglePets}
+      onChange={togglePets}
     >
       <ToggleButton
         value="General"

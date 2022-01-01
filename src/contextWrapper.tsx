@@ -89,7 +89,6 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       user: { _id: "", email: "", fullName: "", phone: "" },
       userPets: [],
     });
-    setPets([]);
     setPetsLimit(20);
     setUsers([]);
     setUsersLimit(20);
@@ -306,7 +305,11 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
           headers
         }
       );
-  userInfoDispatch(data);
+      userInfoDispatch(data);
+      swal({
+        title: `You got it, ${userInfoInputs.fullName}!`,
+        icon: "success",
+      });
     } catch (error) {
       console.error("Error updating profile: ", error);
     }
@@ -405,7 +408,10 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
           headers
         }
       );
-  userInfoDispatch(data);
+      userInfoDispatch(data);
+      const updatedPets = [...pets];
+      updatedPets[modalPetIndex] = { ...updatedPets[modalPetIndex], adoptionStatus: 'Available', foster: null };
+      setPets(updatedPets)
       swal({
         title: `${existingPet.petName}'s Return Done`,
         icon: "success",
@@ -454,7 +460,7 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       const petIndex: number = pets.findIndex((pet) => pet._id === petId);
       setModalPetIndex(petIndex);
       const pet: PetI = pets[petIndex];
-      let ownerId: string | undefined;
+      let ownerId: string | undefined | null;
       if (userInfo._id === pet.publisher) {
         if (pet.adoptionStatus === "Available") {
           setUserContactInfo({

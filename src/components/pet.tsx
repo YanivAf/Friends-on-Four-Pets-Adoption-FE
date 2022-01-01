@@ -110,7 +110,7 @@ const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
 
   return (
     <Card sx={{ width: "50vw", minWidth: 250, maxWidth: 600, m: 1 }}>
-      {(userInfo._id === petToRender.publisher || userInfo.admin) && (
+      {((userInfo._id === petToRender.publisher || userInfo.admin) && petToRender.adoptionStatus === "Available") && (
         <CardActions sx={{ justifyContent: "flex-end" }}>
           <IconButton
             size="large"
