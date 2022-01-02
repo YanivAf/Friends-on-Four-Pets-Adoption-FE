@@ -37,7 +37,7 @@ const PetForm: React.FC = (): JSX.Element => {
   const existingPet = modalPetIndex !== undefined ? pets[modalPetIndex] : null;
   const petPicRef: any = createRef();
   const [newPetPicUrl, setNewPetPicUrl] = useState<string>(
-    `${domain}/images/default.png`
+    `https://cutewallpaper.org/25/animal-footprints-wallpaper/100-free-paw-print-amp-paw-images.png`
   );
   const [petInputs, setPetInputs] = useState<PetI>(
     existingPet
@@ -173,11 +173,13 @@ const PetForm: React.FC = (): JSX.Element => {
             component="img"
             sx={{ objectPosition: "50% 25%", maxHeight: 300 }}
             image={
-              newPetPicUrl.indexOf("default.png") === -1
+              newPetPicUrl.indexOf("cutewallpaper") === -1
                 ? newPetPicUrl
-                : `${domain}/${existingPet?.petPicture
-                    ?.replace(/\\/g, "/")
-                    .replace("public/", "")}?timestamp=${Date.now()}`
+                : existingPet?.petPicture?.indexOf("cutewallpaper") === -1
+                  ? `${domain}/${existingPet?.petPicture
+                      ?.replace(/\\/g, "/")
+                      .replace("public/", "")}?timestamp=${Date.now()}`
+                  : newPetPicUrl
             }
             alt={`${petInputs.petName}`}
             title={`${petInputs.petName}`}

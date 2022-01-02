@@ -128,9 +128,11 @@ const Pet: React.FC<Props> = ({ petToRender }: Props): JSX.Element => {
         <CardMedia
           component="img"
           sx={{ objectPosition: "50% 25%", height: "30vw", minHeight: 140 }}
-          image={`${domain}/${petToRender.petPicture
-            .replace(/\\/g, "/")
-            .replace("public/", "")}?timestamp=${Date.now()}`}
+          image={petToRender.petPicture.indexOf("cutewallpaper") === -1
+          ? `${domain}/${petToRender.petPicture
+              ?.replace(/\\/g, "/")
+              .replace("public/", "")}?timestamp=${Date.now()}`
+          : 'https://cutewallpaper.org/25/animal-footprints-wallpaper/100-free-paw-print-amp-paw-images.png'}
           alt={`${petToRender.petName}`}
           title={`${petToRender.petName}`}
         />
