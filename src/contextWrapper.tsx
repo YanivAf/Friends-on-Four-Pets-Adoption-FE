@@ -118,7 +118,7 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
       cookies.set("currentUser", token, { maxAge: 7200 });
       if (token) userInfoDispatch(userDoc);
       setAuthProcessing(false);
-      getPets(searchInputs, searchedTypeString);
+      getPets(searchInputs, searchedTypeString, false);
       swal({
         title: `Welcome Back, ${userDoc.fullName}!`,
         icon: "success",
@@ -193,11 +193,12 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
   };
 
   const getPets = useCallback(
-    async (searchInputs, searchedTypeString) => {
+    async (searchInputs, searchedTypeString, isSearchClicked) => {
       try {
+        const prevWhichPets = cookies.get("prevWhichPets");
         if (
-          pets.length > 0 &&
-          !advSearchOn &&
+          (whichPets !== prevWhichPets && whichPets !== 'General' && prevWhichPets !== 'General') &&
+          (!isSearchClicked || pets.length > 0) &&
           (pets.length % 20 || pets.length === petsLimit)
         )
           return;
@@ -515,7 +516,7 @@ const ContextWrapper: React.FC = ({ children }): JSX.Element => {
     (currentPath === "/" ||
       (userInfo._id !== "" &&
         (currentPath === "/login" || currentPath === "/signup"))) &&
-      getPets(searchInputs, searchedTypeString);
+      getPets(searchInputs, searchedTypeString, false);
     userInfo.admin === true &&
       (currentPath === "/users" ||
         currentPath.indexOf("profile-view") !== -1) &&

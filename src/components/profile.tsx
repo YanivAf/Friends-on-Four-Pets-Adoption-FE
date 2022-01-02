@@ -1,7 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 
-import swal from "sweetalert";
-
 import Loader from "./loader";
 
 import FullUserInfoI from "../interfaces/fullUserInfoI";

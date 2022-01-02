@@ -220,7 +220,7 @@ export default function AdvancedSearch() {
           size="medium"
           color="secondary"
           aria-label="close-adv-search"
-          sx={{ position: "fixed", top: 180, left: 20 }}
+          sx={{ position: "fixed", top: 180, left: 20, zIndex: 10 }}
           onClick={toggleAdvSearch(false)}
         >
           <ExpandLessIcon />
@@ -230,10 +230,10 @@ export default function AdvancedSearch() {
             size="medium"
             color="primary"
             aria-label="search"
-            sx={{ position: "fixed", top: 180, right: 20 }}
+            sx={{ position: "fixed", top: 180, right: 20, zIndex: 10 }}
             title="Search/Reset"
             onClick={() => {
-              getPets(searchInputs, searchedTypeString);
+              getPets(searchInputs, searchedTypeString, true);
             }}
           >
             <SearchIcon />

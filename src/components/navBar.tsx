@@ -36,6 +36,7 @@ const NavBar: React.FC = (): JSX.Element => {
     searchedUserString,
     setSearchedUserString,
     byWhat,
+    whichPets,
     getPets,
     getUsers,
     toggleAdvSearch,
@@ -90,6 +91,7 @@ const NavBar: React.FC = (): JSX.Element => {
     const cookies = new Cookies();
     cookies.set("whichPets", "Owned", { path: "/", maxAge: 10 });
     cookies.set("userId", userInfo._id, { path: "/", maxAge: 10 });
+    cookies.set("prevWhichPets", whichPets, { path: "/", maxAge: 10 });
     setWhichPets("Owned");
     userInfoDispatch({ ...userInfo, recentlyApproved: 0 });
   };
@@ -149,7 +151,7 @@ const NavBar: React.FC = (): JSX.Element => {
                   aria-haspopup="true"
                   onClick={() => {
                     byWhat === "byPet"
-                      ? getPets(searchInputs, searchedTypeString)
+                      ? getPets(searchInputs, searchedTypeString, true)
                       : getUsers();
                   }}
                   color="inherit"
