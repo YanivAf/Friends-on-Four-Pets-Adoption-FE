@@ -176,9 +176,7 @@ const PetForm: React.FC = (): JSX.Element => {
               newPetPicUrl.indexOf("cutewallpaper") === -1
                 ? newPetPicUrl
                 : existingPet?.petPicture?.indexOf("cutewallpaper") === -1
-                  ? `${domain}/${existingPet?.petPicture
-                      ?.replace(/\\/g, "/")
-                      .replace("public/", "")}?timestamp=${Date.now()}`
+                  ? existingPet?.petPicture
                   : newPetPicUrl
             }
             alt={`${petInputs.petName}`}
