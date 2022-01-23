@@ -1,14 +1,15 @@
 # Friends on Four - pet addoption platform
 
-[BE part](https://github.com/YanivAf/Friends-on-Four-Pets-Adoption-BE).
-[Deployed App](https://friends-on-four.netlify.app/).
+- [BE part](https://github.com/YanivAf/Friends-on-Four-Pets-Adoption-BE)
+
+- [Deployed App](https://friends-on-four.netlify.app/)
 
 ## Features
-Public Users:
+### Public Users:
 - View Available pets basic info (by descending order of last update)
 - Sign up
 
-Registered Users:
+### Registered Users:
 - Login/Logout
 - Publish pets for addoption
 - Edit your pets (including image upload)
@@ -26,20 +27,13 @@ Registered Users:
 - Search queries from DB (as opposed to filter locally)
 - Edit your profile
 
-Admin:
+### Admin:
 - All registered users features
 - Delete any pet
 - View all registered users
 - View specific user with published, adopted, fostered & saved pets
 - Ban/un-ban users (not other admins)
 
-## Running Locally
+## Know a pet shelter that will glad to manage, use & promote this system (FOR FREE)?
+[Contact between us](mailto:yanivaflalo@gmail.com)
 
-use
-```
-yarn start
-```
-or
-```
-npm start
-```
