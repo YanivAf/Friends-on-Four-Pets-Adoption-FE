@@ -36,6 +36,6 @@
 - View specific user with published, adopted, fostered & saved pets
 - Ban/un-ban users (not other admins)
 
-## Know a pet shelter that will glad to manage, use & promote this system (FOR FREE)?
+## Know a pet shelter that will be glad to manage, use & promote this system (FOR FREE)?
 [Contact between us](mailto:yanivaflalo@gmail.com)
 
